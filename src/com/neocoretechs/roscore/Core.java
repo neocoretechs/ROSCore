@@ -20,7 +20,7 @@ public class Core {
 	protected RosCore rosCore;
 	protected NodeConfiguration nodeConfiguration;
 	protected NodeMainExecutor nodeMainExecutor;
-	
+	public static String host = "roscoe2";
 	public static Core getInstance() {
 		if( instance == null ) {
 			instance = new Core();
@@ -41,20 +41,21 @@ public class Core {
 
 
 	public void setUp() throws InterruptedException {
-		    rosCore = RosCore.newPublic(50000); // bind port 50000
+		    rosCore = RosCore.newPublic(host,50000); // bind port 50000
 		    rosCore.start();
 		    assert(rosCore.awaitStart(1, TimeUnit.SECONDS));
 		    nodeMainExecutor = DefaultNodeMainExecutor.newDefault();
-		    nodeConfiguration = NodeConfiguration.newPublic("localhost", rosCore.getUri());
+		    nodeConfiguration = NodeConfiguration.newPublic(host, rosCore.getUri());
 		    System.out.println("ROS Core Uri:"+rosCore.getUri());
 	 }
 
 	 public void setUp(String bindHost) throws InterruptedException {
+		host = bindHost;
 	    rosCore = RosCore.newPublic(bindHost, 50000); // bind port 50000
 	    rosCore.start();
 	    assert(rosCore.awaitStart(1, TimeUnit.SECONDS));
 	    nodeMainExecutor = DefaultNodeMainExecutor.newDefault();
-	    nodeConfiguration = NodeConfiguration.newPublic("localhost", rosCore.getUri());
+	    nodeConfiguration = NodeConfiguration.newPublic(bindHost, rosCore.getUri());
 	    System.out.println("ROS Core Uri:"+rosCore.getUri());
 	 }
 	 
