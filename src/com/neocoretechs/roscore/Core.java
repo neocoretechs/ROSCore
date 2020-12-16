@@ -10,8 +10,9 @@ import org.ros.node.DefaultNodeMainExecutor;
 import org.ros.node.NodeConfiguration;
 import org.ros.node.NodeMainExecutor;
 
+
 /**
- * Start the ROS core and bind to port 50000
+ * Start the ROS core programmatically
  * @author jg
  *
  */
@@ -41,7 +42,7 @@ public class Core {
 
 
 	public void setUp() throws InterruptedException {
-		    rosCore = RosCore.newPublic(host,50000); // bind port 50000
+		    rosCore = RosCore.newPublic(host,8090); // bind port
 		    rosCore.start();
 		    assert(rosCore.awaitStart(1, TimeUnit.SECONDS));
 		    nodeMainExecutor = DefaultNodeMainExecutor.newDefault();
@@ -51,7 +52,7 @@ public class Core {
 
 	 public void setUp(String bindHost) throws InterruptedException {
 		host = bindHost;
-	    rosCore = RosCore.newPublic(bindHost, 50000); // bind port 50000
+	    rosCore = RosCore.newPublic(bindHost, 8090); // bind port 50000
 	    rosCore.start();
 	    assert(rosCore.awaitStart(1, TimeUnit.SECONDS));
 	    nodeMainExecutor = DefaultNodeMainExecutor.newDefault();
@@ -70,5 +71,7 @@ public class Core {
 			 return;
 		 }
 		 Core.getInstance().setUp(args[0]);
+	
+			
 	 }
 }
