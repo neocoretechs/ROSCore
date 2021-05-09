@@ -6,6 +6,8 @@ package com.neocoretechs.roscore;
 import java.util.concurrent.TimeUnit;
 
 import org.ros.RosCore;
+import org.ros.namespace.GraphName;
+import org.ros.namespace.NodeNameResolver;
 import org.ros.node.DefaultNodeMainExecutor;
 import org.ros.node.NodeConfiguration;
 import org.ros.node.NodeMainExecutor;
@@ -13,7 +15,7 @@ import org.ros.node.NodeMainExecutor;
 
 /**
  * Start the ROS core programmatically
- * @author jg
+ * @author Jonathan Groff (C) NeoCoreTechs 2015,2021
  *
  */
 public class Core {
@@ -46,7 +48,7 @@ public class Core {
 		    rosCore.start();
 		    assert(rosCore.awaitStart(1, TimeUnit.SECONDS));
 		    nodeMainExecutor = DefaultNodeMainExecutor.newDefault();
-		    nodeConfiguration = NodeConfiguration.newPublic(host, rosCore.getUri());
+		    nodeConfiguration = NodeConfiguration.newPublic(GraphName.newAnonymous().toString(), host, rosCore.getUri(), Thread.currentThread().getContextClassLoader());
 		    System.out.println("ROS Core Uri:"+rosCore.getUri());
 	 }
 
@@ -56,7 +58,7 @@ public class Core {
 	    rosCore.start();
 	    assert(rosCore.awaitStart(1, TimeUnit.SECONDS));
 	    nodeMainExecutor = DefaultNodeMainExecutor.newDefault();
-	    nodeConfiguration = NodeConfiguration.newPublic(bindHost, rosCore.getUri());
+	    nodeConfiguration = NodeConfiguration.newPublic(GraphName.newAnonymous().toString(), bindHost, rosCore.getUri(), Thread.currentThread().getContextClassLoader());
 	    System.out.println("ROS Core Uri:"+rosCore.getUri());
 	 }
 	 
